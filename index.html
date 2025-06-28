@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartSupply Agri - Premium Agricultural Marketplace | Ghana</title>
+  <meta
+    name="description"
+    content="Ghana's leading agricultural marketplace connecting farmers and buyers with fresh, quality produce. Shop organic vegetables, fruits, grains and more."
+  />
+
+  <!-- External CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "agri-deep": "#17593D",
+            "agri-light": "#327D2B",
+            "agri-mid": "#266D33",
+            "agri-orange": "#FFAA00",
+            "agri-orange-mid": "#FA9200",
+            "agri-orange-deep": "#EB5300",
+            "agri-orange-darker": "#DC0F00",
+            "agri-cream": "#FFF8F0",
+            "agri-sage": "#E8F5E8",
+          },
+          fontFamily: {
+            inter: ["Inter", "sans-serif"],
+            playfair: ["Playfair Display", "serif"],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-white font-inter">
+  <!-- Loading Overlay -->
+  <div
+    id="loading-overlay"
+    class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 hidden"
+  >
+    <div class="text-center">
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-b-2 border-agri-orange mx-auto mb-4"
+      ></div>
+      <p class="text-agri-deep font-semibold">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Top Banner -->
+  <div class="bg-agri-deep text-white py-2 px-4 text-sm">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-truck text-agri-orange"></i>
+        <span class="font-medium">FREE DELIVERY FOR ALL ORDERS OF $50+</span>
+      </div>
+      <div class="text-agri-orange font-semibold">24 4h 40m</div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="bg-white shadow-sm relative z-40">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <div
+          class="flex items-center cursor-pointer"
+          onclick="navigateToPage('home')"
+        >
+          <img
+            src="/placeholder.svg?height=40&width=40&text=Logo"
+            alt="SmartSupply Logo"
+            class="w-10 h-10 rounded-full object-cover mr-3"
+          />
+          <span class="text-xl font-bold text-agri-deep"
+            >SmartSupply Agri</span
+          >
+        </div>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a
+            href="#"
+            onclick="navigateToPage('home')"
+            class="nav-link text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200"
+            data-page="home"
+            >HOME</a
+          >
+          <div class="relative group">
+            <a
+              href="#"
+              class="text-gray-700 hover:text-agri-deep font-medium flex items-center transition-colors duration-200"
+            >
+              MARKETPLACE
+              <i
+                class="fas fa-chevron-down ml-1 text-xs group-hover:rotate-180 transition-transform duration-200"
+              ></i>
+            </a>
+            <!-- Marketplace Dropdown -->
+            <div
+              class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50"
+            >
+              <div class="py-2">
+                <div
+                  class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-100"
+                >
+                  Browse Products
+                </div>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-apple-alt text-agri-orange mr-3 w-4"></i>
+                  Fresh Fruits & Vegetables
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-seedling text-agri-orange mr-3 w-4"></i>
+                  Grains & Cereals
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-leaf text-agri-orange mr-3 w-4"></i>
+                  Organic Products
+                </a>
+                <div class="border-t border-gray-100 mt-2 pt-2">
+                  <div
+                    class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                  >
+                    Services
+                  </div>
+                  <a
+                    href="#"
+                    onclick="navigateToPage('equipment-rental')"
+                    class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                  >
+                    <i class="fas fa-tractor text-agri-orange mr-3 w-4"></i>
+                    Equipment Rental
+                  </a>
+                  <a
+                    href="#"
+                    onclick="navigateToPage('delivery-services')"
+                    class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                  >
+                    <i class="fas fa-truck text-agri-orange mr-3 w-4"></i>
+                    Delivery Services
+                  </a>
+                  <a
+                    href="#"
+                    onclick="navigateToPage('farmer-storefronts')"
+                    class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                  >
+                    <i class="fas fa-store text-agri-orange mr-3 w-4"></i>
+                    Farmer Storefronts
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative group">
+            <a
+              href="#"
+              class="text-gray-700 hover:text-agri-deep font-medium flex items-center transition-colors duration-200"
+            >
+              PAGES
+              <i
+                class="fas fa-chevron-down ml-1 text-xs group-hover:rotate-180 transition-transform duration-200"
+              ></i>
+            </a>
+            <!-- Pages Dropdown -->
+            <div
+              class="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50"
+            >
+              <div class="py-2">
+                <a
+                  href="#"
+                  onclick="navigateToPage('about')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-info-circle text-agri-orange mr-3 w-4"></i>
+                  About Us
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('blog')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-blog text-agri-orange mr-3 w-4"></i>
+                  Blog
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('contact')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-envelope text-agri-orange mr-3 w-4"></i>
+                  Contact
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('faq')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i
+                    class="fas fa-question-circle text-agri-orange mr-3 w-4"
+                  ></i>
+                  FAQ
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('privacy')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-shield-alt text-agri-orange mr-3 w-4"></i>
+                  Privacy Policy
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('coming-soon')"
+                  class="flex items-center px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200 border-t border-gray-100"
+                >
+                  <i class="fas fa-clock text-agri-orange mr-3 w-4"></i>
+                  <span>Coming Soon</span>
+                  <span
+                    class="ml-auto bg-agri-orange text-white text-xs px-2 py-1 rounded-full"
+                    >New</span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href="#"
+            onclick="navigateToPage('farmers')"
+            class="nav-link text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200"
+            data-page="farmers"
+            >FARMERS</a
+          >
+          <a
+            href="#"
+            onclick="navigateToPage('marketplace')"
+            class="nav-link text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200"
+            data-page="marketplace"
+            >FRESH PRODUCE</a
+          >
+        </nav>
+
+        <!-- Mobile Navigation Button -->
+        <button
+          class="md:hidden text-gray-700 hover:text-agri-deep"
+          onclick="toggleMobileMenu()"
+        >
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+
+        <!-- Mobile Menu -->
+        <div
+          id="mobile-menu"
+          class="hidden md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t border-gray-100 z-50"
+        >
+          <div class="py-4">
+            <!-- Mobile Marketplace -->
+            <div class="mobile-dropdown">
+              <button
+                class="w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                onclick="toggleMobileDropdown('marketplace')"
+              >
+                <span class="font-medium">MARKETPLACE</span>
+                <i
+                  class="fas fa-chevron-down transition-transform duration-200"
+                  id="marketplace-arrow"
+                ></i>
+              </button>
+              <div id="marketplace-dropdown" class="hidden bg-gray-50">
+                <div
+                  class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider border-b border-gray-200"
+                >
+                  Browse Products
+                </div>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-apple-alt text-agri-orange mr-3 w-4"></i>
+                  Fresh Fruits & Vegetables
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-seedling text-agri-orange mr-3 w-4"></i>
+                  Grains & Cereals
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-leaf text-agri-orange mr-3 w-4"></i>
+                  Organic Products
+                </a>
+                <div class="border-t border-gray-200 mt-2 pt-2">
+                  <div
+                    class="px-6 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                  >
+                    Services
+                  </div>
+                  <a
+                    href="#"
+                    onclick="navigateToPage('equipment-rental')"
+                    class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                  >
+                    <i class="fas fa-tractor text-agri-orange mr-3 w-4"></i>
+                    Equipment Rental
+                  </a>
+                  <a
+                    href="#"
+                    onclick="navigateToPage('delivery-services')"
+                    class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                  >
+                    <i class="fas fa-truck text-agri-orange mr-3 w-4"></i>
+                    Delivery Services
+                  </a>
+                  <a
+                    href="#"
+                    onclick="navigateToPage('farmer-storefronts')"
+                    class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                  >
+                    <i class="fas fa-store text-agri-orange mr-3 w-4"></i>
+                    Farmer Storefronts
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Pages -->
+            <div class="mobile-dropdown">
+              <button
+                class="w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                onclick="toggleMobileDropdown('pages')"
+              >
+                <span class="font-medium">PAGES</span>
+                <i
+                  class="fas fa-chevron-down transition-transform duration-200"
+                  id="pages-arrow"
+                ></i>
+              </button>
+              <div id="pages-dropdown" class="hidden bg-gray-50">
+                <a
+                  href="#"
+                  onclick="navigateToPage('about')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-info-circle text-agri-orange mr-3 w-4"></i>
+                  About Us
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('blog')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-blog text-agri-orange mr-3 w-4"></i>
+                  Blog
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('contact')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-envelope text-agri-orange mr-3 w-4"></i>
+                  Contact
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('faq')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i
+                    class="fas fa-question-circle text-agri-orange mr-3 w-4"
+                  ></i>
+                  FAQ
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('privacy')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200"
+                >
+                  <i class="fas fa-shield-alt text-agri-orange mr-3 w-4"></i>
+                  Privacy Policy
+                </a>
+                <a
+                  href="#"
+                  onclick="navigateToPage('coming-soon')"
+                  class="flex items-center px-6 py-3 text-gray-600 hover:bg-agri-sage hover:text-agri-deep transition-colors duration-200 border-t border-gray-200"
+                >
+                  <i class="fas fa-clock text-agri-orange mr-3 w-4"></i>
+                  <span>Coming Soon</span>
+                  <span
+                    class="ml-auto bg-agri-orange text-white text-xs px-2 py-1 rounded-full"
+                    >New</span
+                  >
+                </a>
+              </div>
+            </div>
+
+            <a
+              href="#"
+              onclick="navigateToPage('farmers')"
+              class="block px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep font-medium transition-colors duration-200"
+              >FARMERS</a
+            >
+            <a
+              href="#"
+              onclick="navigateToPage('marketplace')"
+              class="block px-4 py-3 text-gray-700 hover:bg-agri-sage hover:text-agri-deep font-medium transition-colors duration-200"
+              >FRESH PRODUCE</a
+            >
+          </div>
+        </div>
+
+        <!-- Right Side -->
+        <div class="flex items-center space-x-4">
+          <select class="text-sm border-none bg-transparent text-gray-700">
+            <option>ENGLISH</option>
+            <option>TWI</option>
+          </select>
+          <select class="text-sm border-none bg-transparent text-gray-700">
+            <option>USD $</option>
+            <option>GHS ₵</option>
+          </select>
+
+          <!-- Cart and Wishlist Icons -->
+          <div class="flex items-center space-x-4">
+            <!-- Wishlist Icon -->
+            <div class="relative cursor-pointer" onclick="navigateToPage('wishlist')">
+              <i class="fas fa-heart text-gray-700 text-lg hover:text-agri-orange transition-colors"></i>
+              <span
+                id="wishlist-count"
+                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                >0</span
+              >
+            </div>
+            
+            <!-- Cart Icon -->
+            <div class="relative cursor-pointer" onclick="navigateToPage('cart')">
+              <i class="fas fa-shopping-cart text-gray-700 text-lg hover:text-agri-orange transition-colors"></i>
+              <span
+                id="cart-count"
+                class="absolute -top-2 -right-2 bg-agri-orange text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                >0</span
+              >
+            </div>
+          </div>
+
+          <!-- Auth Buttons -->
+          <button
+            onclick="navigateToPage('login')"
+            class="text-agri-deep hover:text-agri-light font-medium"
+          >
+            Sign In
+          </button>
+          <button
+            onclick="navigateToPage('register')"
+            class="bg-agri-orange text-white px-4 py-2 rounded-full font-medium hover:bg-agri-orange-mid transition-colors"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Container -->
+  <div id="app-container">
+    <!-- Home Page Content (Default) -->
+    <div id="home-page" class="page-content active">
+      <!-- Hero Section with Dynamic Images -->
+      <section
+        class="relative min-h-screen flex items-center justify-center overflow-hidden"
+        id="heroSection"
+      >
+        <!-- Dynamic Background Images -->
+        <div class="hero-slider absolute inset-0 z-0">
+          <div class="hero-slide active">
+            <img
+              src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+              alt="African farmers harvesting corn at sunset"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"
+            ></div>
+          </div>
+          <div class="hero-slide">
+            <img
+              src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+              alt="Ghanaian woman farmer with fresh vegetables"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"
+            ></div>
+          </div>
+          <div class="hero-slide">
+            <img
+              src="https://images.unsplash.com/photo-1592982736049-97ba5b43e1a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+              alt="Organic tomato greenhouse with workers"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"
+            ></div>
+          </div>
+          <div class="hero-slide">
+            <img
+              src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+              alt="Traditional African market with colorful produce"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"
+            ></div>
+          </div>
+          <div class="hero-slide">
+            <img
+              src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+              alt="Modern agricultural drone over crop fields"
+              class="w-full h-full object-cover"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="container mx-auto px-4 relative z-10 text-white">
+          <div class="max-w-2xl">
+            <!-- Premium Quality Badge -->
+            <div
+              class="inline-block bg-agri-orange text-white px-6 py-2 rounded-full text-sm font-semibold mb-8 animate-pulse"
+            >
+              PREMIUM QUALITY GUARANTEED
+            </div>
+
+            <!-- Main Heading -->
+            <h1
+              class="text-5xl lg:text-7xl font-black leading-tight mb-6 animate-fade-in-up"
+            >
+              SUPPORT<br />
+              LOCAL<br />
+              <span class="text-agri-orange">FARMERS</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p
+              class="text-xl lg:text-2xl mb-12 leading-relaxed opacity-90 animate-fade-in-up"
+              style="animation-delay: 0.2s"
+            >
+              Join thousands of customers who choose to support sustainable
+              agriculture while enjoying the freshest produce available.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div
+              class="flex flex-col sm:flex-row gap-4 animate-fade-in-up"
+              style="animation-delay: 0.4s"
+            >
+              <button
+                onclick="navigateToPage('marketplace')"
+                class="bg-agri-orange text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-agri-orange-mid transition-all transform hover:scale-105 flex items-center justify-center"
+              >
+                Shop Now
+                <i class="fas fa-arrow-right ml-2"></i>
+              </button>
+              <button
+                onclick="navigateToPage('farmers')"
+                class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-agri-deep transition-all flex items-center justify-center"
+              >
+                View Farmers
+                <i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div
+          class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10"
+        >
+          <div
+            class="hero-dot w-3 h-3 bg-white rounded-full cursor-pointer transition-opacity"
+            data-slide="0"
+          ></div>
+          <div
+            class="hero-dot w-3 h-3 bg-white rounded-full opacity-50 cursor-pointer transition-opacity"
+            data-slide="1"
+          ></div>
+          <div
+            class="hero-dot w-3 h-3 bg-white rounded-full opacity-50 cursor-pointer transition-opacity"
+            data-slide="2"
+          ></div>
+          <div
+            class="hero-dot w-3 h-3 bg-white rounded-full opacity-50 cursor-pointer transition-opacity"
+            data-slide="3"
+          ></div>
+          <div
+            class="hero-dot w-3 h-3 bg-white rounded-full opacity-50 cursor-pointer transition-opacity"
+            data-slide="4"
+          ></div>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button
+          class="hero-prev absolute left-8 top-1/2 transform -translate-y-1/2 text-white text-2xl z-10 hover:text-agri-orange transition-colors bg-black/20 rounded-full w-12 h-12 flex items-center justify-center backdrop-blur-sm"
+        >
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button
+          class="hero-next absolute right-8 top-1/2 transform -translate-y-1/2 text-white text-2xl z-10 hover:text-agri-orange transition-colors bg-black/20 rounded-full w-12 h-12 flex items-center justify-center backdrop-blur-sm"
+        >
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </section>
+
+      <!-- Shop by Category Section with Background -->
+      <section class="py-20 relative overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+            alt="Aerial view of organized farm plots"
+            class="w-full h-full object-cover opacity-10"
+          />
+        </div>
+        <div class="absolute inset-0 bg-white/90 z-1"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-agri-deep mb-4">
+              Shop by Category
+            </h2>
+            <p class="text-xl text-gray-600">
+              Discover fresh, locally sourced produce from trusted farmers in
+              your area
+            </p>
+          </div>
+
+          <!-- Categories Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Analytics/Dashboard -->
+            <div
+              class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group"
+              onclick="navigateToPage('marketplace')"
+            >
+              <div class="h-48 relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Farm Analytics Dashboard"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-blue-600/80 to-transparent"
+                ></div>
+                <div class="absolute bottom-4 left-4 text-white">
+                  <h3 class="font-bold text-lg">Analytics</h3>
+                  <p class="text-sm opacity-90">Farm Data</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fresh Fruits -->
+            <div
+              class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group"
+              onclick="navigateToPage('marketplace')"
+            >
+              <div class="h-48 relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Fresh Tropical Fruits"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-orange-600/80 to-transparent"
+                ></div>
+                <div class="absolute bottom-4 left-4 text-white">
+                  <h3 class="font-bold text-lg">Fresh Fruits</h3>
+                  <p class="text-sm opacity-90">Tropical & Sweet</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grains & Cereals -->
+            <div
+              class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group"
+              onclick="navigateToPage('marketplace')"
+            >
+              <div class="h-48 relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Grains & Cereals"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-yellow-700/80 to-transparent"
+                ></div>
+                <div class="absolute bottom-4 left-4 text-white">
+                  <h3 class="font-bold text-lg">Grains</h3>
+                  <p class="text-sm opacity-90">Premium Quality</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Farm Fresh -->
+            <div
+              class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer group"
+              onclick="navigateToPage('marketplace')"
+            >
+              <div class="h-48 relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Farm Fresh Seedlings"
+                  class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div
+                  class="absolute inset-0 bg-gradient-to-t from-green-700/80 to-transparent"
+                ></div>
+                <div class="absolute bottom-4 left-4 text-white">
+                  <h3 class="font-bold text-lg">Farm Fresh</h3>
+                  <p class="text-sm opacity-90">Direct from Farm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Hot Deals Section with Background Pattern -->
+      <section class="py-20 relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+            alt="Orange geometric pattern"
+            class="w-full h-full object-cover opacity-20"
+          />
+        </div>
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-agri-orange to-agri-orange-mid z-1"
+        ></div>
+
+        <div
+          class="container mx-auto px-4 text-center relative z-10 text-white"
+        >
+          <div class="max-w-2xl mx-auto">
+            <!-- Fire Icon -->
+            <div class="mb-6">
+              <i class="fas fa-fire text-6xl text-white animate-pulse"></i>
+            </div>
+
+            <h2 class="text-4xl lg:text-5xl font-bold mb-4">
+              Hot Deals This Week
+            </h2>
+            <p class="text-xl mb-12 opacity-90">
+              Limited time offers on premium produce
+            </p>
+
+            <!-- Countdown Timer -->
+            <div
+              class="bg-white/20 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-white/30"
+            >
+              <h3 class="text-2xl font-bold mb-6">Flash Sale Ends In:</h3>
+              <div class="text-5xl font-black mb-6" id="countdown">
+                <span id="hours">14</span>:<span id="minutes">08</span>:<span
+                  id="seconds"
+                  >10</span
+                >
+              </div>
+              <button
+                onclick="navigateToPage('marketplace')"
+                class="bg-white text-agri-orange px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition-colors transform hover:scale-105"
+              >
+                Shop Deals Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Products Section with Background -->
+      <section class="py-20 relative overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1560493676-04071c5f467b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+            alt="Soft watercolor background with produce silhouettes"
+            class="w-full h-full object-cover opacity-5"
+          />
+        </div>
+        <div class="absolute inset-0 bg-gray-50/95 z-1"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-agri-deep mb-8">
+              Featured Products
+            </h2>
+
+            <!-- Product Tabs -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+              <button
+                class="bg-agri-orange text-white px-6 py-3 rounded-full font-semibold transition-all hover:bg-agri-orange-mid"
+              >
+                Popular
+              </button>
+              <button
+                class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold hover:bg-agri-orange hover:text-white transition-all shadow-md"
+              >
+                On Sale
+              </button>
+              <button
+                class="bg-white text-gray-700 px-6 py-3 rounded-full font-semibold hover:bg-agri-orange hover:text-white transition-all shadow-md"
+              >
+                Best Sellers
+              </button>
+            </div>
+          </div>
+
+          <!-- Products Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="navigateToProductPage('tom001')">
+              <div class="relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Premium Fresh Tomatoes"
+                  class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div class="absolute top-4 left-4 flex gap-2">
+                  <span
+                    class="bg-agri-orange text-white px-3 py-1 rounded-full text-sm font-semibold"
+                    >Organic</span
+                  >
+                </div>
+                <button
+                  class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors"
+                  onclick="event.stopPropagation(); addToWishlistFromHome('tom001')"
+                >
+                  <i
+                    class="far fa-heart text-gray-600 hover:text-red-500"
+                  ></i>
+                </button>
+                <div
+                  class="absolute bottom-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold"
+                >
+                  Hosted Shop
+                </div>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-sm mr-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <span class="text-sm text-gray-500">4.9</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">
+                  Premium Fresh Tomatoes
+                </h3>
+                <p class="text-sm text-gray-600 mb-4">5km away</p>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-2xl font-bold text-agri-deep"
+                      >$4.99</span
+                    >
+                    <span class="text-sm text-gray-500">/kg</span>
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      onclick="event.stopPropagation(); addToWishlistFromHome('tom001')"
+                      class="w-10 h-10 bg-white border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+                    >
+                      <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                    </button>
+                    <button
+                      onclick="event.stopPropagation(); navigateToProductPage('tom001')"
+                      class="bg-agri-deep text-white px-4 py-2 rounded-lg font-semibold hover:bg-agri-light transition-colors"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="navigateToProductPage('car002')">
+              <div class="relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1445282768818-728615cc910a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Organic Baby Carrots"
+                  class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div class="absolute top-4 left-4 flex gap-2">
+                  <span
+                    class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                    >Hosted Shop</span
+                  >
+                  <span
+                    class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                    >Organic</span
+                  >
+                </div>
+                <button
+                  class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors"
+                  onclick="event.stopPropagation(); addToWishlistFromHome('car002')"
+                >
+                  <i
+                    class="far fa-heart text-gray-600 hover:text-red-500"
+                  ></i>
+                </button>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-sm mr-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <span class="text-sm text-gray-500">4.8</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">
+                  Organic Baby Carrots
+                </h3>
+                <p class="text-sm text-gray-600 mb-4">12km away</p>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-2xl font-bold text-agri-deep"
+                      >$3.49</span
+                    >
+                    <span class="text-sm text-gray-500">/kg</span>
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      onclick="event.stopPropagation(); addToWishlistFromHome('car002')"
+                      class="w-10 h-10 bg-white border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+                    >
+                      <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                    </button>
+                    <button
+                      onclick="event.stopPropagation(); navigateToProductPage('car002')"
+                      class="bg-agri-deep text-white px-4 py-2 rounded-lg font-semibold hover:bg-agri-light transition-colors"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Product 3 -->
+             
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer" onclick="navigateToProductPage('let003')">
+              <div class="relative overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80"
+                  alt="Crisp Butter Lettuce"
+                  class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div class="absolute top-4 left-4 flex gap-2">
+                  <span
+                    class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                    >Local Farm</span
+                  >
+                </div>
+                <button
+                  class="absolute top-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors"
+                  onclick="event.stopPropagation(); addToWishlistFromHome('let003')"
+                >
+                  <i
+                    class="far fa-heart text-gray-600 hover:text-red-500"
+                  ></i>
+                </button>
+              </div>
+              <div class="p-6">
+                <div class="flex items-center mb-2">
+                  <div class="flex text-yellow-400 text-sm mr-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </div>
+                  <span class="text-sm text-gray-500">4.7</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-800 mb-2">
+                  Crisp Butter Lettuce
+                </h3>
+                <p class="text-sm text-gray-600 mb-4">8km away</p>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <span class="text-2xl font-bold text-agri-deep"
+                      >$2.99</span
+                    >
+                    <span class="text-sm text-gray-500">/kg</span>
+                  </div>
+                  <div class="flex space-x-2">
+                    <button
+                      onclick="event.stopPropagation(); addToWishlistFromHome('let003')"
+                      class="w-10 h-10 bg-white border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
+                    >
+                      <i class="far fa-heart text-gray-600 hover:text-red-500"></i>
+                    </button>
+                    <button
+                      onclick="event.stopPropagation(); navigateToProductPage('let003')"
+                      class="bg-agri-deep text-white px-4 py-2 rounded-lg font-semibold hover:bg-agri-light transition-colors"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Newsletter Section with Background -->
+      <section class="py-20 relative overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+            alt="Lush green farm landscape"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-agri-deep/90"></div>
+        </div>
+
+        <div
+          class="container mx-auto px-4 text-center relative z-10 text-white"
+        >
+          <div class="max-w-2xl mx-auto">
+            <h2 class="text-4xl font-bold mb-6">
+              Stay Fresh with Our Updates
+            </h2>
+            <p class="text-xl mb-12 opacity-90">
+              Get the latest updates on fresh arrivals and exclusive offers
+            </p>
+
+            <form class="max-w-lg mx-auto" onsubmit="handleNewsletter(event)">
+              <div class="flex flex-col sm:flex-row gap-4">
+                <input
+                  type="email"
+                  placeholder="Enter your email address"
+                  class="flex-1 px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-4 focus:ring-agri-orange"
+                  required
+                />
+                <button
+                  type="submit"
+                  class="bg-agri-orange px-8 py-4 rounded-full font-bold hover:bg-agri-orange-mid transition-all transform hover:scale-105"
+                >
+                  Subscribe Now
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Dynamic Page Content Container -->
+    <div id="dynamic-page" class="page-content">
+      <!-- Dynamic content will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Footer with Background -->
+  <footer class="relative overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+      <img
+        src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+        alt="Dark agricultural pattern"
+        class="w-full h-full object-cover opacity-10"
+      />
+    </div>
+    <div class="absolute inset-0 bg-agri-deep z-1"></div>
+
+    <div class="py-16 relative z-10">
+      <div class="container mx-auto px-4 text-white">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Company Info -->
+          <div>
+            <div class="flex items-center mb-6">
+              <div
+                class="w-10 h-10 bg-agri-orange rounded-full flex items-center justify-center mr-3"
+              >
+                <i class="fas fa-leaf text-white text-lg"></i>
+              </div>
+              <span class="text-xl font-bold">SmartSupply Agri</span>
+            </div>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Connecting farmers and buyers for a sustainable agricultural
+              future. Fresh produce, direct from farm to table.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 bg-agri-orange rounded-full flex items-center justify-center hover:bg-agri-orange-mid transition-colors"
+              >
+                <i class="fab fa-facebook text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-agri-orange rounded-full flex items-center justify-center hover:bg-agri-orange-mid transition-colors"
+              >
+                <i class="fab fa-twitter text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-agri-orange rounded-full flex items-center justify-center hover:bg-agri-orange-mid transition-colors"
+              >
+                <i class="fab fa-instagram text-white"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Marketplace -->
+          <div>
+            <h4 class="font-bold text-lg mb-6">Marketplace</h4>
+            <ul class="space-y-3 text-gray-300">
+              <li>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="hover:text-agri-orange transition-colors"
+                  >Browse Products</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="navigateToPage('farmers')"
+                  class="hover:text-agri-orange transition-colors"
+                  >Local Farmers</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="hover:text-agri-orange transition-colors"
+                  >Categories</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="navigateToPage('marketplace')"
+                  class="hover:text-agri-orange transition-colors"
+                  >Equipment Rental</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Support -->
+          <div>
+            <h4 class="font-bold text-lg mb-6">Support</h4>
+            <ul class="space-y-3 text-gray-300">
+              <li>
+                <a
+                  href="#"
+                  onclick="navigateToPage('faq')"
+                  class="hover:text-agri-orange transition-colors"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="navigateToPage('contact')"
+                  class="hover:text-agri-orange transition-colors"
+                  >Contact Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-agri-orange transition-colors"
+                  >Delivery Info</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-agri-orange transition-colors"
+                  >Returns</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Connect -->
+          <div>
+            <h4 class="font-bold text-lg mb-6">Connect</h4>
+            <p class="text-gray-300 mb-4">
+              Subscribe to our newsletter for fresh updates
+            </p>
+            <div class="flex space-x-2">
+              <a
+                href="#"
+                class="w-10 h-10 bg-agri-orange rounded-full flex items-center justify-center hover:bg-agri-orange-mid transition-colors"
+              >
+                <i class="fab fa-facebook text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-agri-orange rounded-full flex items-center justify-center hover:bg-agri-orange-mid transition-colors"
+              >
+                <i class="fab fa-twitter text-white"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 bg-agri-orange rounded-full flex items-center justify-center hover:bg-agri-orange-mid transition-colors"
+              >
+                <i class="fab fa-instagram text-white"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div
+          class="border-t border-gray-600 mt-12 pt-8 text-center text-gray-300"
+        >
+          <p>
+            &copy; 2024 SmartSupply Agri. All rights reserved. |
+            <a
+              href="#"
+              onclick="navigateToPage('privacy')"
+              class="hover:text-agri-orange"
+              >Privacy Policy</a
+            >
+            | <a href="#" class="hover:text-agri-orange">Terms of Service</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

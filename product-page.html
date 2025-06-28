@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Fresh Tomatoes - SmartSupply Agri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "agri-deep": "#17593D",
+              "agri-light": "#327D2B", 
+              "agri-mid": "#266D33",
+              "agri-orange": "#FFAA00",
+              "agri-orange-mid": "#FA9200",
+              "agri-orange-deep": "#EB5300",
+              "agri-orange-darker": "#DC0F00",
+              "agri-cream": "#FFF8F0",
+              "agri-sage": "#E8F5E8"
+            },
+            fontFamily: {
+              inter: ["Inter", "sans-serif"],
+              playfair: ["Playfair Display", "serif"]
+            }
+          }
+        }
+      };
+    </script>
+</head>
+<body class="bg-gray-50 font-inter">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="/images/fulllogo (1).png" alt="SmartSupply Logo" class="w-10 h-10 rounded-full object-cover mr-3">
+                    <span class="text-xl font-bold text-agri-deep">SmartSupply Agri</span>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200">HOME</a>
+                    <a href="index.html#marketplace" class="text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200">MARKETPLACE</a>
+                    <a href="index.html#farmers" class="text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200">FARMERS</a>
+                </nav>
+
+                <!-- Right Side -->
+                <div class="flex items-center space-x-4">
+                    <!-- Wishlist Icon -->
+                    <div class="relative cursor-pointer" onclick="window.location.href='wishlist.html'">
+                        <i class="fas fa-heart text-gray-700 text-lg hover:text-agri-orange transition-colors"></i>
+                        <span id="wishlist-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </div>
+                    
+                    <!-- Cart Icon -->
+                    <div class="relative cursor-pointer" onclick="window.location.href='cart.html'">
+                        <i class="fas fa-shopping-cart text-gray-700 text-lg hover:text-agri-orange transition-colors"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-agri-orange text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 py-4">
+        <div class="container mx-auto px-4">
+            <nav class="text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-agri-deep">Home</a>
+                <span class="mx-2 text-gray-400">></span>
+                <a href="index.html#marketplace" class="text-gray-600 hover:text-agri-deep">Marketplace</a>
+                <span class="mx-2 text-gray-400">></span>
+                <span class="text-agri-deep font-medium">Premium Fresh Tomatoes</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Product Images -->
+                <div class="space-y-4">
+                    <!-- Main Image -->
+                    <div class="aspect-square bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <img id="main-image" src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Premium Fresh Tomatoes" class="w-full h-full object-cover">
+                    </div>
+
+                    <!-- Thumbnail Images -->
+                    <div class="grid grid-cols-4 gap-4">
+                        <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tomatoes 1" class="thumbnail-img aspect-square object-cover rounded-lg cursor-pointer border-2 border-agri-orange active">
+                        <img src="https://images.unsplash.com/photo-1518975495921-7ad9bee54d2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tomatoes 2" class="thumbnail-img aspect-square object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-agri-orange">
+                        <img src="https://images.unsplash.com/photo-1607305387299-a3d9611cd469?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tomatoes 3" class="thumbnail-img aspect-square object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-agri-orange">
+                        <img src="https://images.unsplash.com/photo-1546470427-e26264be0b0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Tomatoes 4" class="thumbnail-img aspect-square object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-agri-orange">
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div class="space-y-6">
+                    <!-- Product Badges -->
+                    <div class="flex gap-2">
+                        <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Organic</span>
+                        <span class="bg-agri-orange text-white px-3 py-1 rounded-full text-sm font-semibold">Fresh</span>
+                    </div>
+
+                    <!-- Product Title -->
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">Premium Fresh Tomatoes</h1>
+                        <p class="text-gray-600">From Farmer John's Organic Farm</p>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="flex items-center space-x-2">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-600">(4.9)</span>
+                        <span class="text-gray-500">•</span>
+                        <span class="text-gray-600">127 reviews</span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex items-center space-x-4">
+                        <span class="text-4xl font-bold text-agri-deep">$4.99</span>
+                        <span class="text-xl text-gray-500 line-through">$6.99</span>
+                        <span class="bg-red-100 text-red-600 px-2 py-1 rounded text-sm font-semibold">29% OFF</span>
+                    </div>
+
+                    <!-- Stock Status -->
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                        <span class="text-green-600 font-medium">In Stock (10 available)</span>
+                    </div>
+
+                    <!-- Quantity and Add to Cart -->
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-gray-700 font-medium">Quantity:</span>
+                            <div class="flex items-center border border-gray-300 rounded-lg">
+                                <button id="qty-minus" class="px-3 py-2 hover:bg-gray-100 transition-colors">
+                                    <i class="fas fa-minus text-sm"></i>
+                                </button>
+                                <input id="quantity" type="number" value="1" min="1" max="10" class="w-16 text-center border-none focus:outline-none">
+                                <button id="qty-plus" class="px-3 py-2 hover:bg-gray-100 transition-colors">
+                                    <i class="fas fa-plus text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-4">
+                            <button id="add-to-cart" class="flex-1 bg-agri-deep text-white py-3 px-6 rounded-lg font-semibold hover:bg-agri-light transition-colors flex items-center justify-center">
+                                <i class="fas fa-shopping-cart mr-2"></i>
+                                Add to Cart
+                            </button>
+                            <button id="wishlist-btn" class="w-12 h-12 border border-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+                                <i class="far fa-heart text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Farmer Information -->
+                    <div class="bg-agri-sage rounded-lg p-4">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Farmer John" class="w-16 h-16 rounded-full object-cover">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">Farmer John's Organic Farm</h3>
+                                <p class="text-sm text-gray-600">Certified Organic • 15 years experience</p>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400 text-sm mr-2">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-sm text-gray-600">4.9 (89 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Information Tabs -->
+            <div class="mt-16">
+                <div class="border-b border-gray-200">
+                    <nav class="flex space-x-8">
+                        <button class="tab-btn py-4 px-1 border-b-2 border-agri-orange text-agri-deep font-medium" data-tab="description">
+                            Description
+                        </button>
+                        <button class="tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="nutrition">
+                            Nutrition Facts
+                        </button>
+                        <button class="tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="reviews">
+                            Reviews (127)
+                        </button>
+                        <button class="tab-btn py-4 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="shipping">
+                            Shipping Info
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="py-8">
+                    <!-- Description Tab -->
+                    <div id="description" class="tab-content">
+                        <div class="prose max-w-none">
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                Our premium fresh tomatoes are grown using sustainable organic farming practices on Farmer John's certified organic farm. These vine-ripened tomatoes are harvested at peak freshness to ensure maximum flavor and nutritional value.
+                            </p>
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                Perfect for salads, cooking, or eating fresh, these tomatoes are rich in vitamins C and K, potassium, and lycopene. They're grown without synthetic pesticides or fertilizers, making them a healthy choice for you and your family.
+                            </p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li>Certified organic</li>
+                                <li>Vine-ripened for optimal flavor</li>
+                                <li>Rich in vitamins and antioxidants</li>
+                                <li>Grown using sustainable practices</li>
+                                <li>Harvested fresh daily</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Nutrition Tab -->
+                    <div id="nutrition" class="tab-content hidden">
+                        <div class="bg-white rounded-lg p-6 shadow-sm">
+                            <h3 class="text-lg font-semibold mb-4">Nutrition Facts (per 100g)</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="flex justify-between border-b pb-2">
+                                    <span>Calories</span>
+                                    <span class="font-medium">18</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-2">
+                                    <span>Protein</span>
+                                    <span class="font-medium">0.9g</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-2">
+                                    <span>Carbohydrates</span>
+                                    <span class="font-medium">3.9g</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-2">
+                                    <span>Fiber</span>
+                                    <span class="font-medium">1.2g</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-2">
+                                    <span>Vitamin C</span>
+                                    <span class="font-medium">14mg</span>
+                                </div>
+                                <div class="flex justify-between border-b pb-2">
+                                    <span>Potassium</span>
+                                    <span class="font-medium">237mg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reviews Tab -->
+                    <div id="reviews" class="tab-content hidden">
+                        <div class="space-y-6">
+                            <!-- Review Summary -->
+                            <div class="bg-white rounded-lg p-6 shadow-sm">
+                                <div class="flex items-center space-x-4 mb-4">
+                                    <div class="text-4xl font-bold text-agri-deep">4.9</div>
+                                    <div>
+                                        <div class="flex text-yellow-400 mb-1">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <p class="text-gray-600">Based on 127 reviews</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Individual Reviews -->
+                            <div class="space-y-4">
+                                <div class="bg-white rounded-lg p-6 shadow-sm">
+                                    <div class="flex items-start space-x-4">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Sarah M." class="w-12 h-12 rounded-full object-cover">
+                                        <div class="flex-1">
+                                            <div class="flex items-center space-x-2 mb-2">
+                                                <h4 class="font-semibold">Sarah M.</h4>
+                                                <div class="flex text-yellow-400 text-sm">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="text-gray-600">Amazing quality! These tomatoes are so fresh and flavorful. Perfect for my summer salads.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-lg p-6 shadow-sm">
+                                    <div class="flex items-start space-x-4">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Mike R." class="w-12 h-12 rounded-full object-cover">
+                                        <div class="flex-1">
+                                            <div class="flex items-center space-x-2 mb-2">
+                                                <h4 class="font-semibold">Mike R.</h4>
+                                                <div class="flex text-yellow-400 text-sm">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="text-gray-600">Best tomatoes I've ever bought online. Fast delivery and excellent packaging.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Tab -->
+                    <div id="shipping" class="tab-content hidden">
+                        <div class="bg-white rounded-lg p-6 shadow-sm">
+                            <h3 class="text-lg font-semibold mb-4">Shipping Information</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <i class="fas fa-truck text-agri-orange mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium">Free Shipping</h4>
+                                        <p class="text-gray-600">On orders over $50</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <i class="fas fa-clock text-agri-orange mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium">Delivery Time</h4>
+                                        <p class="text-gray-600">1-2 business days for fresh produce</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <i class="fas fa-shield-alt text-agri-orange mt-1"></i>
+                                    <div>
+                                        <h4 class="font-medium">Freshness Guarantee</h4>
+                                        <p class="text-gray-600">100% satisfaction or your money back</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold text-gray-800 mb-8">Related Products</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Related Product 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="window.location.href='product-page.html'">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1445282768818-728615cc910a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Organic Carrots" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Organic</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Organic Baby Carrots</h3>
+                            <p class="text-sm text-gray-600 mb-2">Green Valley Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$3.49</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Product 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fresh Lettuce" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-agri-orange text-white px-2 py-1 rounded-full text-xs font-semibold">Fresh</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Crisp Butter Lettuce</h3>
+                            <p class="text-sm text-gray-600 mb-2">Sunshine Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$2.99</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Product 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fresh Peppers" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Sale</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Colorful Bell Peppers</h3>
+                            <p class="text-sm text-gray-600 mb-2">Rainbow Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$4.99</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Product 4 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fresh Cucumbers" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Organic</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Garden Fresh Cucumbers</h3>
+                            <p class="text-sm text-gray-600 mb-2">Valley Green Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$2.49</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="product-page.js"></script>
+</body>
+</html>

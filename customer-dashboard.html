@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - SmartSupply Agri</title>
+    
+    <!-- External CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-deep': '#17593D',
+                        'agri-light': '#327D2B', 
+                        'agri-mid': '#266D33',
+                        'agri-orange': '#FFAA00',
+                        'agri-orange-mid': '#FA9200',
+                        'agri-orange-deep': '#EB5300',
+                        'agri-orange-darker': '#DC0F00',
+                        'agri-cream': '#FFF8F0',
+                        'agri-sage': '#E8F5E8'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .sidebar-scroll {
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #17593D 0%, #327D2B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-confirmed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-processing {
+            background: #e0e7ff;
+            color: #5b21b6;
+        }
+        
+        .status-shipped {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-in-transit {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-delivered {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .favorite-card {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .favorite-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .favorite-heart {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .favorite-heart:hover {
+            transform: scale(1.1);
+        }
+        
+        .favorite-heart.active {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .message-bubble {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .message-sent {
+            background: #17593D;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message-received {
+            background: #f3f4f6;
+            color: #374151;
+            margin-right: auto;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .tracking-step {
+            position: relative;
+            padding-left: 40px;
+            padding-bottom: 24px;
+        }
+        
+        .tracking-step:last-child {
+            padding-bottom: 0;
+        }
+        
+        .tracking-step::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 32px;
+            bottom: -8px;
+            width: 2px;
+            background: #e5e7eb;
+        }
+        
+        .tracking-step:last-child::before {
+            display: none;
+        }
+        
+        .tracking-step.completed::before {
+            background: #17593D;
+        }
+        
+        .tracking-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+        
+        .tracking-step.completed .tracking-icon {
+            background: #17593D;
+            color: white;
+        }
+        
+        .tracking-step.current .tracking-icon {
+            background: #FFAA00;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+        
+        .address-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .address-card:hover {
+            border-color: #17593D;
+            box-shadow: 0 4px 12px rgba(23, 89, 61, 0.1);
+        }
+        
+        .address-card.default {
+            border-color: #17593D;
+            background: #f0fdf4;
+        }
+        
+        .notification-item {
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.2s ease;
+        }
+        
+        .notification-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .notification-item.unread {
+            background-color: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .favorites-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .favorites-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Left Side - Logo & Breadcrumb -->
+                <div class="flex items-center space-x-4">
+                    <button id="sidebar-toggle" class="lg:hidden text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-agri-deep rounded-lg flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900">SmartSupply Agri</h1>
+                    </div>
+                    <nav class="hidden md:flex items-center space-x-2 text-sm text-gray-600">
+                        <a href="#" class="hover:text-agri-deep">Customer Portal</a>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                        <span id="breadcrumb-current" class="text-agri-deep font-medium">Dashboard</span>
+                    </nav>
+                </div>
+                
+                <!-- Right Side - Actions -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-gray-900 relative" onclick="showNotifications()">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-agri-orange rounded-full"></span>
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-900 relative" onclick="showMessages()">
+                        <i class="fas fa-envelope text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="bg-agri-orange text-white px-4 py-2 rounded-lg font-medium hover:bg-agri-orange-mid transition-colors" onclick="goToMarketplace()">
+                        <i class="fas fa-shopping-cart mr-2"></i>
+                        Shop Now
+                    </button>
+                    
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-3 pl-4 border-l border-gray-200">
+                        <div class="user-avatar">
+                            <span>SJ</span>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="text-sm font-medium text-gray-900">Sarah Johnson</div>
+                            <div class="text-xs text-gray-500">Premium Customer</div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600" onclick="showProfileMenu()">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-transform duration-300 ease-in-out">
+            <div class="flex flex-col h-full">
+                <!-- Sidebar Header -->
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900">Customer Portal</h2>
+                        <button id="sidebar-close" class="lg:hidden text-gray-600 hover:text-gray-900">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="flex-1 p-4 space-y-2 sidebar-scroll">
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-agri-deep bg-agri-sage rounded-lg font-medium" data-page="dashboard">
+                        <i class="fas fa-chart-line w-5"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="orders">
+                        <i class="fas fa-shopping-bag w-5"></i>
+                        <span>My Orders</span>
+                        <span class="ml-auto bg-agri-orange text-white text-xs px-2 py-1 rounded-full">3</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="favorites">
+                        <i class="fas fa-heart w-5"></i>
+                        <span>Favorites</span>
+                        <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">8</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="watchlist">
+                        <i class="fas fa-eye w-5"></i>
+                        <span>Watchlist</span>
+                        <span class="ml-auto bg-blue-500 text-white text-xs px-2 py-1 rounded-full">5</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="messages">
+                        <i class="fas fa-envelope w-5"></i>
+                        <span>Messages</span>
+                        <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">2</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="addresses">
+                        <i class="fas fa-map-marker-alt w-5"></i>
+                        <span>Saved Addresses</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="settings">
+                        <i class="fas fa-cog w-5"></i>
+                        <span>Account Settings</span>
+                    </a>
+                    
+                    <!-- Quick Actions -->
+                    <div class="pt-6 mt-6 border-t border-gray-200">
+                        <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Quick Actions</h3>
+                        <button class="w-full flex items-center space-x-3 px-4 py-3 text-agri-deep bg-agri-sage rounded-lg hover:bg-agri-light hover:text-white transition-colors" onclick="goToMarketplace()">
+                            <i class="fas fa-shopping-cart w-5"></i>
+                            <span>Browse Products</span>
+                        </button>
+                        <button class="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg mt-2" onclick="showOrderTracking()">
+                            <i class="fas fa-truck w-5"></i>
+                            <span>Track Order</span>
+                        </button>
+                    </div>
+                </nav>
+                
+                <!-- Sidebar Footer -->
+                <div class="p-4 border-t border-gray-200">
+                    <div class="bg-agri-sage rounded-lg p-4 mb-4">
+                        <div class="flex items-center space-x-3 mb-2">
+                            <i class="fas fa-headset text-agri-deep"></i>
+                            <span class="text-sm font-medium text-agri-deep">Need Help?</span>
+                        </div>
+                        <p class="text-xs text-gray-600 mb-3">Contact our customer support team</p>
+                        <button class="text-xs bg-agri-deep text-white px-3 py-1 rounded-lg hover:bg-agri-light transition-colors" onclick="contactSupport()">
+                            Contact Support
+                        </button>
+                    </div>
+                    <button class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg w-full">
+                        <i class="fas fa-sign-out-alt w-5"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-0">
+            <!-- Dashboard Content -->
+            <div id="dashboard-content" class="p-6">
+                <!-- Welcome Section -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, Sarah!</h1>
+                    <p class="text-gray-600">Here's an overview of your recent activity and orders.</p>
+                </div>
+
+                <!-- Metrics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Orders -->
+                    <div class="metric-card" style="background: linear-gradient(135deg, #17593D 0%, #327D2B 100%);">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-shopping-bag text-white text-xl"></i>
+                            </div>
+                            <span class="text-green-300 text-sm">+3 this month</span>
+                        </div>
+                        <div class="text-white">
+                            <div class="text-2xl font-bold mb-1">24</div>
+                            <div class="text-sm opacity-90">Total Orders</div>
+                        </div>
+                    </div>
+
+                    <!-- Active Orders -->
+                    <div class="metric-card" style="background: linear-gradient(135deg, #FFAA00 0%, #FA9200 100%);">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-truck text-white text-xl"></i>
+                            </div>
+                            <span class="text-yellow-200 text-sm">2 in transit</span>
+                        </div>
+                        <div class="text-white">
+                            <div class="text-2xl font-bold mb-1">3</div>
+                            <div class="text-sm opacity-90">Active Orders</div>
+                        </div>
+                    </div>
+
+                    <!-- Total Spent -->
+                    <div class="metric-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-dollar-sign text-white text-xl"></i>
+                            </div>
+                            <span class="text-blue-200 text-sm">This year</span>
+                        </div>
+                        <div class="text-white">
+                            <div class="text-2xl font-bold mb-1">$1,247</div>
+                            <div class="text-sm opacity-90">Total Spent</div>
+                        </div>
+                    </div>
+
+                    <!-- Saved Items -->
+                    <div class="metric-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                <i class="fas fa-heart text-white text-xl"></i>
+                            </div>
+                            <span class="text-pink-200 text-sm">8 favorites</span>
+                        </div>
+                        <div class="text-white">
+                            <div class="text-2xl font-bold mb-1">13</div>
+                            <div class="text-sm opacity-90">Saved Items</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders and Activity -->
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+                    <!-- Recent Orders -->
+                    <div class="xl:col-span-2 dashboard-card p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-gray-900">Recent Orders</h3>
+                            <a href="#" class="text-agri-deep hover:text-agri-light text-sm font-medium" onclick="showOrders()">View All Orders</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                                <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Organic Tomatoes" class="product-image">
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">Organic Tomatoes</h4>
+                                    <p class="text-sm text-gray-600">Green Valley Farm • 5 kg</p>
+                                    <p class="text-sm font-medium text-gray-900">$24.99</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="status-badge status-in-transit">In Transit</span>
+                                    <p class="text-xs text-gray-500 mt-1">Dec 15, 2024</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                                <img src="https://images.unsplash.com/photo-1445282768818-728615cc910a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Fresh Carrots" class="product-image">
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">Fresh Carrots</h4>
+                                    <p class="text-sm text-gray-600">Sunshine Acres • 3 kg</p>
+                                    <p class="text-sm font-medium text-gray-900">$18.50</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="status-badge status-processing">Processing</span>
+                                    <p class="text-xs text-gray-500 mt-1">Dec 14, 2024</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                                <img src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Butter Lettuce" class="product-image">
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">Butter Lettuce</h4>
+                                    <p class="text-sm text-gray-600">Organic Gardens Co. • 2 kg</p>
+                                    <p class="text-sm font-medium text-gray-900">$12.75</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="status-badge status-delivered">Delivered</span>
+                                    <p class="text-xs text-gray-500 mt-1">Dec 13, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions & Notifications -->
+                    <div class="space-y-6">
+                        <!-- Quick Order Tracking -->
+                        <div class="dashboard-card p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Track Your Order</h3>
+                            <div class="space-y-3">
+                                <input type="text" placeholder="Enter Order ID (e.g., ORD-001)" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent">
+                                <button class="w-full bg-agri-deep text-white py-3 rounded-lg font-medium hover:bg-agri-light transition-colors" onclick="trackOrder()">
+                                    <i class="fas fa-search mr-2"></i>
+                                    Track Order
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recent Notifications -->
+                        <div class="dashboard-card p-6">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Notifications</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-truck text-green-600 text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Your order #ORD-001 is out for delivery</p>
+                                        <p class="text-xs text-gray-500">2 hours ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-tag text-blue-600 text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Price drop alert: Organic Apples now $3.99/kg</p>
+                                        <p class="text-xs text-gray-500">1 day ago</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-star text-yellow-600 text-xs"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm text-gray-900">Please rate your recent purchase</p>
+                                        <p class="text-xs text-gray-500">2 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Favorite Products Preview -->
+                <div class="dashboard-card p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-lg font-semibold text-gray-900">Your Favorite Products</h3>
+                        <a href="#" class="text-agri-deep hover:text-agri-light text-sm font-medium" onclick="showFavorites()">View All Favorites</a>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="favorite-card dashboard-card p-4">
+                            <div class="favorite-heart active">
+                                <i class="fas fa-heart text-sm"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Organic Tomatoes" class="w-full h-32 object-cover rounded-lg mb-3">
+                            <h4 class="font-medium text-gray-900 text-sm mb-1">Organic Tomatoes</h4>
+                            <p class="text-xs text-gray-600 mb-2">Green Valley Farm</p>
+                            <p class="text-sm font-bold text-agri-deep">$4.99/kg</p>
+                        </div>
+                        <div class="favorite-card dashboard-card p-4">
+                            <div class="favorite-heart active">
+                                <i class="fas fa-heart text-sm"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1445282768818-728615cc910a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Fresh Carrots" class="w-full h-32 object-cover rounded-lg mb-3">
+                            <h4 class="font-medium text-gray-900 text-sm mb-1">Fresh Carrots</h4>
+                            <p class="text-xs text-gray-600 mb-2">Sunshine Acres</p>
+                            <p class="text-sm font-bold text-agri-deep">$3.49/kg</p>
+                        </div>
+                        <div class="favorite-card dashboard-card p-4">
+                            <div class="favorite-heart active">
+                                <i class="fas fa-heart text-sm"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Butter Lettuce" class="w-full h-32 object-cover rounded-lg mb-3">
+                            <h4 class="font-medium text-gray-900 text-sm mb-1">Butter Lettuce</h4>
+                            <p class="text-xs text-gray-600 mb-2">Organic Gardens</p>
+                            <p class="text-sm font-bold text-agri-deep">$2.99/kg</p>
+                        </div>
+                        <div class="favorite-card dashboard-card p-4">
+                            <div class="favorite-heart active">
+                                <i class="fas fa-heart text-sm"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Fresh Apples" class="w-full h-32 object-cover rounded-lg mb-3">
+                            <h4 class="font-medium text-gray-900 text-sm mb-1">Fresh Apples</h4>
+                            <p class="text-xs text-gray-600 mb-2">Mountain View</p>
+                            <p class="text-sm font-bold text-agri-deep">$5.99/kg</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Content Container -->
+            <div id="dynamic-content" class="hidden">
+                <!-- Content will be loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Order Tracking Modal -->
+    <div id="order-tracking-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-gray-900">Order Tracking</h2>
+                    <button onclick="hideOrderTracking()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">Order #ORD-001</h3>
+                            <p class="text-sm text-gray-600">Placed on December 15, 2024</p>
+                        </div>
+                        <span class="status-badge status-in-transit">In Transit</span>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Organic Tomatoes" class="product-image">
+                            <div class="flex-1">
+                                <h4 class="font-medium text-gray-900">Organic Tomatoes</h4>
+                                <p class="text-sm text-gray-600">Green Valley Farm • 5 kg</p>
+                                <p class="text-sm font-medium text-gray-900">$24.99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-900 mb-4">Delivery Progress</h4>
+                    <div class="space-y-4">
+                        <div class="tracking-step completed">
+                            <div class="tracking-icon">
+                                <i class="fas fa-check text-sm"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-900">Order Confirmed</h5>
+                                <p class="text-sm text-gray-600">Your order has been confirmed by the farmer</p>
+                                <p class="text-xs text-gray-500">Dec 15, 2024 at 10:30 AM</p>
+                            </div>
+                        </div>
+                        <div class="tracking-step completed">
+                            <div class="tracking-icon">
+                                <i class="fas fa-seedling text-sm"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-900">Harvested & Prepared</h5>
+                                <p class="text-sm text-gray-600">Products harvested and prepared for pickup</p>
+                                <p class="text-xs text-gray-500">Dec 15, 2024 at 2:15 PM</p>
+                            </div>
+                        </div>
+                        <div class="tracking-step completed">
+                            <div class="tracking-icon">
+                                <i class="fas fa-truck text-sm"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-900">Picked Up by SmartSupply</h5>
+                                <p class="text-sm text-gray-600">Order collected by our logistics team</p>
+                                <p class="text-xs text-gray-500">Dec 15, 2024 at 4:45 PM</p>
+                            </div>
+                        </div>
+                        <div class="tracking-step current">
+                            <div class="tracking-icon">
+                                <i class="fas fa-shipping-fast text-sm"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-900">In Transit</h5>
+                                <p class="text-sm text-gray-600">Your order is on the way to your address</p>
+                                <p class="text-xs text-gray-500">Expected delivery: Dec 16, 2024 by 2:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="tracking-step">
+                            <div class="tracking-icon">
+                                <i class="fas fa-home text-sm"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-900">Delivered</h5>
+                                <p class="text-sm text-gray-600">Order delivered to your address</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-agri-sage rounded-lg p-4">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <i class="fas fa-truck text-agri-deep"></i>
+                        <span class="text-sm font-medium text-agri-deep">SmartSupply Logistics</span>
+                    </div>
+                    <p class="text-xs text-gray-600 mb-3">Your order is being handled by our professional logistics team</p>
+                    <div class="flex items-center space-x-4 text-xs text-gray-600">
+                        <span><i class="fas fa-phone mr-1"></i> +233-800-SMART</span>
+                        <span><i class="fas fa-envelope mr-1"></i> logistics@smartsupply.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Address Modal -->
+    <div id="add-address-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-gray-900">Add New Address</h2>
+                    <button onclick="hideAddAddress()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <form id="add-address-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Address Label</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent" placeholder="e.g., Home, Office, etc." required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent" placeholder="Recipient's full name" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                        <input type="tel" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent" placeholder="+233 XX XXX XXXX" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Street Address</label>
+                        <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent" placeholder="House number and street name" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">City</label>
+                            <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent" placeholder="City" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Region</label>
+                            <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent" required>
+                                <option value="">Select Region</option>
+                                <option value="greater-accra">Greater Accra</option>
+                                <option value="ashanti">Ashanti</option>
+                                <option value="western">Western</option>
+                                <option value="central">Central</option>
+                                <option value="eastern">Eastern</option>
+                                <option value="volta">Volta</option>
+                                <option value="northern">Northern</option>
+                                <option value="upper-east">Upper East</option>
+                                <option value="upper-west">Upper West</option>
+                                <option value="brong-ahafo">Brong Ahafo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Additional Instructions (Optional)</label>
+                        <textarea rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent" placeholder="Delivery instructions, landmarks, etc."></textarea>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="default-address" class="mr-3 text-agri-orange focus:ring-agri-orange">
+                        <label for="default-address" class="text-sm text-gray-700">Set as default address</label>
+                    </div>
+                    <div class="flex justify-end space-x-4 pt-4 border-t border-gray-200">
+                        <button type="button" onclick="hideAddAddress()" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="px-6 py-3 bg-agri-deep text-white rounded-lg hover:bg-agri-light transition-colors">
+                            Save Address
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden"></div>
+
+    <script src="customer-dashboard.js"></script>
+</body>
+</html>

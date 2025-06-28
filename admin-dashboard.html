@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSupply Agri - Admin Dashboard</title>
+    
+    <!-- External CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-deep': '#17593D',
+                        'agri-light': '#327D2B', 
+                        'agri-mid': '#266D33',
+                        'agri-orange': '#FFAA00',
+                        'agri-orange-mid': '#FA9200',
+                        'agri-orange-deep': '#EB5300',
+                        'agri-orange-darker': '#DC0F00',
+                        'agri-cream': '#FFF8F0',
+                        'agri-sage': '#E8F5E8'
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .sidebar-scroll {
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Left Side - Breadcrumb -->
+                <div class="flex items-center space-x-4">
+                    <button id="sidebar-toggle" class="lg:hidden text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-agri-deep rounded-lg flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-gray-900">SmartSupply Agri</h1>
+                    </div>
+                    <nav class="hidden md:flex items-center space-x-2 text-sm text-gray-600">
+                        <a href="#" class="hover:text-agri-deep">Home</a>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                        <span id="breadcrumb-current" class="text-agri-deep font-medium">Dashboard</span>
+                    </nav>
+                </div>
+                
+                <!-- Right Side - Actions -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-gray-900 relative">
+                        <i class="fas fa-plus text-lg"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-900 relative">
+                        <i class="fas fa-envelope text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-900 relative">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 w-3 h-3 bg-agri-orange rounded-full"></span>
+                    </button>
+                    <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-cog text-lg"></i>
+                    </button>
+                    
+                    <!-- User Profile -->
+                    <div class="flex items-center space-x-3 pl-4 border-l border-gray-200">
+                        <div class="user-avatar">
+                            <span>AD</span>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="text-sm font-medium text-gray-900">Admin User</div>
+                            <div class="text-xs text-gray-500">Super Admin</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-transform duration-300 ease-in-out">
+            <div class="flex flex-col h-full">
+                <!-- Sidebar Header -->
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900">Navigation</h2>
+                        <button id="sidebar-close" class="lg:hidden text-gray-600 hover:text-gray-900">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="flex-1 p-4 space-y-2 sidebar-scroll">
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-agri-deep bg-agri-sage rounded-lg font-medium" data-page="dashboard">
+                        <i class="fas fa-chart-line w-5"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="users">
+                        <i class="fas fa-users w-5"></i>
+                        <span>User Management</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="products">
+                        <i class="fas fa-seedling w-5"></i>
+                        <span>Products</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="orders">
+                        <i class="fas fa-shopping-cart w-5"></i>
+                        <span>Orders</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="farmers">
+                        <i class="fas fa-tractor w-5"></i>
+                        <span>Farmers</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="delivery">
+                        <i class="fas fa-truck w-5"></i>
+                        <span>Delivery</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="analytics">
+                        <i class="fas fa-chart-bar w-5"></i>
+                        <span>Analytics</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="finance">
+                        <i class="fas fa-dollar-sign w-5"></i>
+                        <span>Finance</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="content">
+                        <i class="fas fa-edit w-5"></i>
+                        <span>Content Management</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="announcements">
+                        <i class="fas fa-bullhorn w-5"></i>
+                        <span>Announcements</span>
+                    </a>
+                    <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg" data-page="settings">
+                        <i class="fas fa-cog w-5"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+                
+                <!-- Sidebar Footer -->
+                <div class="p-4 border-t border-gray-200">
+                    <button class="flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg w-full">
+                        <i class="fas fa-sign-out-alt w-5"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-0">
+            <div class="p-6">
+                <!-- Dashboard Grid -->
+                <div class="dashboard-grid grid grid-cols-1 xl:grid-cols-4 gap-6">
+                    <!-- Left Content (3 columns) -->
+                    <div class="xl:col-span-3 space-y-6">
+                        <!-- Shortcut Report -->
+                        <section>
+                            <h2 class="text-xl font-semibold text-gray-900 mb-6">Shortcut Report</h2>
+                            <div class="metric-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                                <!-- Today Sales -->
+                                <div class="metric-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-dollar-sign text-white text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="text-white">
+                                        <div class="text-2xl font-bold mb-1">$2,847</div>
+                                        <div class="text-sm opacity-90 mb-3">Today Sales</div>
+                                        <div class="flex items-center text-sm">
+                                            <span class="text-green-300">+12.5%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Last 7 Days Sales -->
+                                <div class="metric-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-chart-line text-white text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="text-white">
+                                        <div class="text-2xl font-bold mb-1">$18,420</div>
+                                        <div class="text-sm opacity-90 mb-3">Last 7 day's Sales</div>
+                                        <div class="flex items-center text-sm">
+                                            <span class="text-green-300">+8.2%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Last 30 Days Sales -->
+                                <div class="metric-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-calendar-alt text-white text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="text-white">
+                                        <div class="text-2xl font-bold mb-1">$74,850</div>
+                                        <div class="text-sm opacity-90 mb-3">Last 30 day's Sales</div>
+                                        <div class="flex items-center text-sm">
+                                            <span class="text-green-300">+15.3%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Total Users -->
+                                <div class="metric-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center">
+                                            <i class="fas fa-users text-white text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="text-white">
+                                        <div class="text-2xl font-bold mb-1">1,247</div>
+                                        <div class="text-sm opacity-90 mb-3">Total Users</div>
+                                        <div class="flex items-center text-sm">
+                                            <span class="text-green-300">+5.7%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Charts Section -->
+                        <section>
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Sales Chart -->
+                                <div class="dashboard-card p-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-lg font-semibold text-gray-900">Sales Overview</h3>
+                                        <select class="text-sm border border-gray-300 rounded-lg px-3 py-1">
+                                            <option>Last 7 days</option>
+                                            <option>Last 30 days</option>
+                                            <option>Last 3 months</option>
+                                        </select>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="salesChart"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- User Growth Chart -->
+                                <div class="dashboard-card p-6">
+                                    <div class="flex items-center justify-between mb-6">
+                                        <h3 class="text-lg font-semibold text-gray-900">User Growth</h3>
+                                        <select class="text-sm border border-gray-300 rounded-lg px-3 py-1">
+                                            <option>This month</option>
+                                            <option>Last month</option>
+                                            <option>Last 3 months</option>
+                                        </select>
+                                    </div>
+                                    <div class="chart-container">
+                                        <canvas id="userChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Recent Orders -->
+                        <section>
+                            <div class="dashboard-card p-6">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-900">Recent Orders</h3>
+                                    <a href="#" class="text-agri-deep hover:text-agri-light text-sm font-medium">View All</a>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full">
+                                        <thead>
+                                            <tr class="border-b border-gray-200">
+                                                <th class="text-left py-3 px-4 font-medium text-gray-700">Order ID</th>
+                                                <th class="text-left py-3 px-4 font-medium text-gray-700">Customer</th>
+                                                <th class="text-left py-3 px-4 font-medium text-gray-700">Product</th>
+                                                <th class="text-left py-3 px-4 font-medium text-gray-700">Amount</th>
+                                                <th class="text-left py-3 px-4 font-medium text-gray-700">Status</th>
+                                                <th class="text-left py-3 px-4 font-medium text-gray-700">Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                                <td class="py-4 px-4 text-sm font-medium text-gray-900">#ORD-001</td>
+                                                <td class="py-4 px-4 text-sm text-gray-700">John Doe</td>
+                                                <td class="py-4 px-4 text-sm text-gray-700">Organic Tomatoes</td>
+                                                <td class="py-4 px-4 text-sm font-medium text-gray-900">$24.99</td>
+                                                <td class="py-4 px-4">
+                                                    <span class="status-badge status-active">Delivered</span>
+                                                </td>
+                                                <td class="py-4 px-4 text-sm text-gray-500">Dec 15, 2024</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                                <td class="py-4 px-4 text-sm font-medium text-gray-900">#ORD-002</td>
+                                                <td class="py-4 px-4 text-sm text-gray-700">Jane Smith</td>
+                                                <td class="py-4 px-4 text-sm text-gray-700">Fresh Carrots</td>
+                                                <td class="py-4 px-4 text-sm font-medium text-gray-900">$18.50</td>
+                                                <td class="py-4 px-4">
+                                                    <span class="status-badge status-pending">Processing</span>
+                                                </td>
+                                                <td class="py-4 px-4 text-sm text-gray-500">Dec 15, 2024</td>
+                                            </tr>
+                                            <tr class="border-b border-gray-100 hover:bg-gray-50">
+                                                <td class="py-4 px-4 text-sm font-medium text-gray-900">#ORD-003</td>
+                                                <td class="py-4 px-4 text-sm text-gray-700">Mike Johnson</td>
+                                                <td class="py-4 px-4 text-sm text-gray-700">Organic Lettuce</td>
+                                                <td class="py-4 px-4 text-sm font-medium text-gray-900">$12.75</td>
+                                                <td class="py-4 px-4">
+                                                    <span class="status-badge status-active">Shipped</span>
+                                                </td>
+                                                <td class="py-4 px-4 text-sm text-gray-500">Dec 14, 2024</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Right Sidebar (1 column) -->
+                    <div class="xl:col-span-1 space-y-6">
+                        <!-- Quick Actions -->
+                        <section>
+                            <div class="dashboard-card p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full flex items-center space-x-3 px-4 py-3 bg-agri-deep text-white rounded-lg hover:bg-agri-light transition-colors">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Add Product</span>
+                                    </button>
+                                    <button class="w-full flex items-center space-x-3 px-4 py-3 bg-agri-orange text-white rounded-lg hover:bg-agri-orange-mid transition-colors">
+                                        <i class="fas fa-user-plus"></i>
+                                        <span>Add Farmer</span>
+                                    </button>
+                                    <button class="w-full flex items-center space-x-3 px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                        <i class="fas fa-bullhorn"></i>
+                                        <span>Send Announcement</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Recent Activity -->
+                        <section>
+                            <div class="dashboard-card p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-check text-green-600 text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-900">New order received</p>
+                                            <p class="text-xs text-gray-500">2 minutes ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-user text-blue-600 text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-900">New farmer registered</p>
+                                            <p class="text-xs text-gray-500">15 minutes ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-truck text-yellow-600 text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-900">Delivery completed</p>
+                                            <p class="text-xs text-gray-500">1 hour ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-seedling text-purple-600 text-xs"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm text-gray-900">New product added</p>
+                                            <p class="text-xs text-gray-500">3 hours ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Top Farmers -->
+                        <section>
+                            <div class="dashboard-card p-6">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Top Farmers</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="user-avatar">JD</div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-gray-900">John Doe</p>
+                                            <p class="text-xs text-gray-500">$2,847 sales</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-sm font-medium text-green-600">+12%</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="user-avatar">JS</div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-gray-900">Jane Smith</p>
+                                            <p class="text-xs text-gray-500">$2,156 sales</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-sm font-medium text-green-600">+8%</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-3">
+                                        <div class="user-avatar">MJ</div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-medium text-gray-900">Mike Johnson</p>
+                                            <p class="text-xs text-gray-500">$1,923 sales</p>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-sm font-medium text-green-600">+15%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sidebar Overlay for Mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden hidden"></div>
+
+    <script>
+        // Sidebar Toggle Functionality
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            sidebarOverlay.classList.remove('hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            sidebarOverlay.classList.add('hidden');
+        }
+
+        sidebarToggle.addEventListener('click', openSidebar);
+        sidebarClose.addEventListener('click', closeSidebar);
+        sidebarOverlay.addEventListener('click', closeSidebar);
+
+        // Navigation Active State
+        const navItems = document.querySelectorAll('.nav-item');
+        const breadcrumbCurrent = document.getElementById('breadcrumb-current');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active state from all items
+                navItems.forEach(nav => {
+                    nav.classList.remove('text-agri-deep', 'bg-agri-sage');
+                    nav.classList.add('text-gray-700');
+                });
+                
+                // Add active state to clicked item
+                item.classList.remove('text-gray-700');
+                item.classList.add('text-agri-deep', 'bg-agri-sage');
+                
+                // Update breadcrumb
+                const pageName = item.querySelector('span').textContent;
+                breadcrumbCurrent.textContent = pageName;
+                
+                // Close sidebar on mobile
+                if (window.innerWidth < 1024) {
+                    closeSidebar();
+                }
+            });
+        });
+
+        // Initialize Charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sales Chart
+            const salesCtx = document.getElementById('salesChart').getContext('2d');
+            new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Sales',
+                        data: [1200, 1900, 3000, 5000, 2000, 3000, 4500],
+                        borderColor: '#17593D',
+                        backgroundColor: 'rgba(23, 89, 61, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // User Growth Chart
+            const userCtx = document.getElementById('userChart').getContext('2d');
+            new Chart(userCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'New Users',
+                        data: [65, 59, 80, 81],
+                        backgroundColor: '#FFAA00',
+                        borderRadius: 8,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Auto-refresh data every 30 seconds
+        setInterval(() => {
+            // Simulate data refresh
+            console.log('Refreshing dashboard data...');
+        }, 30000);
+
+        // Add some interactive features
+        document.querySelectorAll('.metric-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+        });
+    </script>
+</body>
+</html>

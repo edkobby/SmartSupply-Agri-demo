@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - SmartSupply Agri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "agri-deep": "#17593D",
+              "agri-light": "#327D2B", 
+              "agri-mid": "#266D33",
+              "agri-orange": "#FFAA00",
+              "agri-orange-mid": "#FA9200",
+              "agri-orange-deep": "#EB5300",
+              "agri-orange-darker": "#DC0F00",
+              "agri-cream": "#FFF8F0",
+              "agri-sage": "#E8F5E8"
+            },
+            fontFamily: {
+              inter: ["Inter", "sans-serif"],
+              playfair: ["Playfair Display", "serif"]
+            }
+          }
+        }
+      };
+    </script>
+</head>
+<body class="bg-gray-50 font-inter">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center cursor-pointer" onclick="window.location.href='index.html'">
+                    <img src="/images/fulllogo (1).png" alt="SmartSupply Logo" class="w-10 h-10 rounded-full object-cover mr-3">
+                    <span class="text-xl font-bold text-agri-deep">SmartSupply Agri</span>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200">HOME</a>
+                    <a href="index.html#marketplace" class="text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200">MARKETPLACE</a>
+                    <a href="index.html#farmers" class="text-gray-700 hover:text-agri-deep font-medium transition-colors duration-200">FARMERS</a>
+                </nav>
+
+                <!-- Right Side -->
+                <div class="flex items-center space-x-4">
+                    <!-- Wishlist Icon -->
+                    <div class="relative cursor-pointer" onclick="window.location.href='wishlist.html'">
+                        <i class="fas fa-heart text-gray-700 text-lg hover:text-agri-orange transition-colors"></i>
+                        <span id="wishlist-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </div>
+                    
+                    <!-- Cart Icon -->
+                    <div class="relative cursor-pointer">
+                        <i class="fas fa-shopping-cart text-agri-orange text-lg"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-agri-orange text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 py-4">
+        <div class="container mx-auto px-4">
+            <nav class="text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-agri-deep">Home</a>
+                <span class="mx-2 text-gray-400">></span>
+                <span class="text-agri-deep font-medium">Shopping Cart</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Shopping Cart</h1>
+                <button id="continue-shopping" class="text-agri-deep hover:text-agri-light font-medium flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Continue Shopping
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Cart Items -->
+                <div class="lg:col-span-2">
+                    <!-- Cart Items Container -->
+                    <div id="cart-items" class="space-y-4">
+                        <!-- Cart items will be dynamically loaded here -->
+                    </div>
+
+                    <!-- Empty Cart Message -->
+                    <div id="empty-cart" class="hidden text-center py-16">
+                        <div class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-shopping-cart text-4xl text-gray-400"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Your cart is empty</h2>
+                        <p class="text-gray-600 mb-8">Looks like you haven't added any items to your cart yet.</p>
+                        <button onclick="window.location.href='index.html'" class="bg-agri-deep text-white px-8 py-3 rounded-lg font-semibold hover:bg-agri-light transition-colors">
+                            Start Shopping
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div id="order-summary" class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Order Summary</h2>
+                        
+                        <!-- Promo Code -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Promo Code</label>
+                            <div class="flex space-x-2">
+                                <input id="promo-code" type="text" placeholder="Enter code" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent">
+                                <button id="apply-promo" class="bg-agri-deep text-white px-4 py-2 rounded-lg font-medium hover:bg-agri-light transition-colors">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Order Details -->
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="subtotal" class="font-medium">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tax</span>
+                                <span id="tax" class="font-medium">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Shipping</span>
+                                <span id="shipping" class="font-medium">Free</span>
+                            </div>
+                            <div class="border-t pt-3">
+                                <div class="flex justify-between">
+                                    <span class="text-lg font-bold text-gray-800">Total</span>
+                                    <span id="total" class="text-lg font-bold text-agri-deep">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Checkout Button -->
+                        <button id="checkout-btn" class="w-full bg-agri-deep text-white py-3 px-6 rounded-lg font-semibold hover:bg-agri-light transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed">
+                            Proceed to Checkout
+                        </button>
+
+                        <!-- Security Info -->
+                        <div class="mt-4 text-center">
+                            <div class="flex items-center justify-center space-x-2 text-sm text-gray-500">
+                                <i class="fas fa-lock"></i>
+                                <span>Secure checkout guaranteed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommended Products -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold text-gray-800 mb-8">You might also like</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Recommended Product 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="window.location.href='product-page.html'">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1445282768818-728615cc910a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Organic Carrots" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Organic</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Organic Baby Carrots</h3>
+                            <p class="text-sm text-gray-600 mb-2">Green Valley Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$3.49</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Product 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fresh Lettuce" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-agri-orange text-white px-2 py-1 rounded-full text-xs font-semibold">Fresh</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Crisp Butter Lettuce</h3>
+                            <p class="text-sm text-gray-600 mb-2">Sunshine Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$2.99</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Product 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fresh Peppers" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Sale</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Colorful Bell Peppers</h3>
+                            <p class="text-sm text-gray-600 mb-2">Rainbow Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$4.99</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Product 4 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Fresh Cucumbers" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">Organic</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-gray-800 mb-2">Garden Fresh Cucumbers</h3>
+                            <p class="text-sm text-gray-600 mb-2">Valley Green Farm</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-lg font-bold text-agri-deep">$2.49</span>
+                                <button class="bg-agri-deep text-white px-3 py-1 rounded text-sm hover:bg-agri-light transition-colors">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <span id="toast-message"></span>
+    </div>
+
+    <script src="cart.js"></script>
+</body>
+</html>

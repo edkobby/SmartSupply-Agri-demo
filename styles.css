@@ -1,0 +1,668 @@
+/* SmartSupply Agri - Custom Styles with Dynamic Images */
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Hero Slider Styles */
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-dot {
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.hero-dot.active {
+  opacity: 1 !important;
+}
+
+/* Hero Navigation */
+.hero-prev,
+.hero-next {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-prev:hover,
+.hero-next:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Glass Effect - Optimized */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+/* Category Cards with Enhanced Hover */
+.category-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.category-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: transform 0.5s ease;
+  z-index: 10;
+}
+
+.category-card:hover::before {
+  transform: translateX(200%);
+}
+
+/* Card Hover Effects - Optimized */
+.card-hover {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.card-hover:hover {
+  transform: translateZ(0) translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Cards with Image Hover */
+.product-card {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout style paint;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: transform 0.5s ease;
+  transform: translateX(0);
+  will-change: transform;
+  z-index: 10;
+}
+
+.product-card:hover::before {
+  transform: translateX(200%);
+}
+
+.product-card:hover {
+  transform: translateZ(0) translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Image Zoom Effect */
+.product-card img {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.1);
+}
+
+/* Primary Button */
+.btn-primary {
+  background: linear-gradient(135deg, #ffaa00, #fa9200);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+  box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: transform 0.5s ease;
+  transform: translateX(0);
+  will-change: transform;
+}
+
+.btn-primary:hover::before {
+  transform: translateX(200%);
+}
+
+.btn-primary:hover {
+  transform: translateZ(0) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 170, 0, 0.4);
+}
+
+/* Tab Button Styles */
+.tab-btn {
+  transition: all 0.3s ease;
+  transform: translateZ(0);
+  will-change: transform;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #666;
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #ffaa00, #fa9200);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
+  transform: translateZ(0) scale(1.05);
+  border-color: transparent;
+}
+
+.tab-btn:hover:not(.active) {
+  background: rgba(255, 170, 0, 0.1);
+  color: #17593d;
+  transform: translateZ(0) translateY(-1px);
+}
+
+/* Background Image Overlays */
+.bg-overlay {
+  position: relative;
+}
+
+.bg-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+/* Parallax Effect for Background Images */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Toast Notifications - Optimized */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  z-index: 1000;
+  transform: translateZ(0) translateX(400px);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  will-change: transform;
+}
+
+.toast.show {
+  transform: translateZ(0) translateX(0);
+}
+
+.toast.success {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+}
+
+.toast.error {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+}
+
+.toast.info {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+}
+
+/* Optimized Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-50px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(50px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes bounceGentle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -15px, 0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  80%,
+  100% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1.0);
+    transform: translate3d(0, 0, 0);
+  }
+  40%,
+  43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -30px, 0);
+  }
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -15px, 0);
+  }
+  90% {
+    transform: translate3d(0, -4px, 0);
+  }
+}
+
+/* Mobile Responsive - Optimized */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 80vh;
+    padding: 2rem 0;
+  }
+
+  .hero-section h1 {
+    font-size: 3rem;
+  }
+
+  .hero-prev,
+  .hero-next {
+    width: 10px;
+    height: 10px;
+    font-size: 1rem;
+  }
+
+  .hero-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .card-hover:hover {
+    transform: translateZ(0) translateY(-4px) scale(1.01);
+  }
+
+  .parallax-bg {
+    background-attachment: scroll;
+  }
+
+  .hero-slide h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-slide p {
+    font-size: 1rem;
+  }
+}
+
+/* Utility Classes */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+.animate-fade-in-down {
+  animation: fadeInDown 0.5s ease-out;
+}
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease-out;
+}
+.animate-slide-in-right {
+  animation: slideInRight 0.6s ease-out;
+}
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out;
+}
+.animate-bounce-gentle {
+  animation: bounceGentle 3s ease-in-out infinite;
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+.animate-pulse-slow {
+  animation: pulse 4s infinite;
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* Performance optimizations for scroll-triggered elements */
+.scroll-optimized {
+  transform: translateZ(0);
+  will-change: transform;
+  contain: layout style paint;
+  backface-visibility: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-slide {
+    transition: none;
+  }
+}
+
+/* Typography - Matching Reference Bold Style */
+h1 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+/* Navigation Dropdown Styles */
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+
+.group:hover .group-hover\:visible {
+  visibility: visible;
+}
+
+.group:hover .group-hover\:translate-y-0 {
+  transform: translateY(0);
+}
+
+.group:hover .group-hover\:rotate-180 {
+  transform: rotate(180deg);
+}
+
+/* Enhanced Dropdown Animations */
+nav .group {
+  position: relative;
+}
+
+nav .group > div {
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+nav .group:hover > div {
+  pointer-events: auto;
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Dropdown Item Hover Effects */
+.dropdown-menu a {
+  position: relative;
+  overflow: hidden;
+}
+
+.dropdown-menu a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 170, 0, 0.1), transparent);
+  transition: transform 0.5s ease;
+}
+
+.dropdown-menu a:hover::before {
+  transform: translateX(200%);
+}
+
+/* Mobile Dropdown Styles */
+.mobile-dropdown {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.mobile-dropdown:last-child {
+  border-bottom: none;
+}
+
+/* Mobile Dropdown Animation */
+#marketplace-dropdown,
+#pages-dropdown {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+#marketplace-dropdown.show,
+#pages-dropdown.show {
+  max-height: 500px;
+}
+
+/* Responsive Dropdown Positioning */
+@media (max-width: 1024px) {
+  nav .group > div {
+    left: -50%;
+    transform: translateX(25%);
+  }
+}
+
+/* Page Content Styles */
+.page-content {
+  display: none;
+}
+
+.page-content.active {
+  display: block;
+}
+
+/* Mobile Menu Styles */
+.mobile-dropdown .show {
+  display: block !important;
+}
+
+.mobile-dropdown .rotate {
+  transform: rotate(180deg);
+}
+
+/* Smooth transitions for all interactive elements */
+nav a,
+.mobile-dropdown a,
+.mobile-dropdown button {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Enhanced shadow for dropdown menus */
+nav .group > div {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Prevent dropdown from being cut off */
+header {
+  position: relative;
+  z-index: 1000;
+}
+
+nav .group > div {
+  z-index: 1001;
+}
+
+/* Focus States for Accessibility */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #ffaa00;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

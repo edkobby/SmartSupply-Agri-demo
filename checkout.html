@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - SmartSupply Agri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'agri-deep': '#17593D',
+                        'agri-light': '#327D2B', 
+                        'agri-sage': '#266D33',
+                        'agri-orange': '#FFAA00',
+                        'agri-orange-mid': '#FA9200',
+                        'agri-orange-dark': '#EB5300',
+                        'agri-red': '#DC0F00'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <!-- Top Bar -->
+        <div class="bg-agri-deep text-white py-2">
+            <div class="container mx-auto px-4 flex justify-between items-center text-sm">
+                <div class="flex items-center space-x-4">
+                    <span><i class="fas fa-shipping-fast mr-2"></i>FREE SHIPPING FOR ALL ORDERS OF $50+</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span>CALL ANYTIME</span>
+                    <span class="font-semibold">+(233) 872-670-780</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-agri-deep rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-leaf text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-agri-deep">SmartSupply</h1>
+                        <p class="text-sm text-gray-600">Agri Marketplace</p>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="#" onclick="navigateToPage('home')" class="text-gray-700 hover:text-agri-deep nav-link" data-page="home">Home</a>
+                    <a href="#" onclick="navigateToPage('marketplace')" class="text-gray-700 hover:text-agri-deep nav-link" data-page="marketplace">Marketplace</a>
+                    <a href="#" onclick="navigateToPage('farmers')" class="text-gray-700 hover:text-agri-deep nav-link" data-page="farmers">Farmers</a>
+                    <a href="#" onclick="navigateToPage('about')" class="text-gray-700 hover:text-agri-deep nav-link" data-page="about">About</a>
+                    <a href="#" onclick="navigateToPage('contact')" class="text-gray-700 hover:text-agri-deep nav-link" data-page="contact">Contact</a>
+                </nav>
+
+                <!-- Cart & User Actions -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="navigateToPage('wishlist')" class="relative p-2 text-gray-700 hover:text-agri-deep">
+                        <i class="far fa-heart text-xl"></i>
+                        <span id="wishlist-count" class="absolute -top-1 -right-1 bg-agri-orange text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="navigateToPage('cart')" class="relative p-2 text-gray-700 hover:text-agri-deep">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-agri-orange text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button onclick="navigateToPage('login')" class="bg-agri-deep text-white px-4 py-2 rounded-lg hover:bg-agri-light transition-colors">
+                        <i class="fas fa-user mr-2"></i>Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="bg-gray-100 py-4">
+        <div class="container mx-auto px-4">
+            <nav class="text-sm">
+                <a href="#" onclick="navigateToPage('home')" class="text-gray-600 hover:text-agri-deep">Home</a>
+                <span class="mx-2 text-gray-400">></span>
+                <a href="#" onclick="navigateToPage('cart')" class="text-gray-600 hover:text-agri-deep">Cart</a>
+                <span class="mx-2 text-gray-400">></span>
+                <span class="text-agri-deep font-medium">Checkout</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold text-gray-800 mb-8">Checkout</h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Checkout Form -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Customer Information -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Customer Information</h2>
+                        <form class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                                    <input type="text" id="firstName" name="firstName" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                           placeholder="Enter your first name">
+                                </div>
+                                <div>
+                                    <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
+                                    <input type="text" id="lastName" name="lastName" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                           placeholder="Enter your last name">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                                <input type="email" id="email" name="email" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                       placeholder="your.email@example.com">
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                       placeholder="+(233) 000-000-000">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Shipping Address -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Shipping Address</h2>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Street Address *</label>
+                                <input type="text" id="address" name="address" required
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                       placeholder="Enter your street address">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                                    <input type="text" id="city" name="city" required
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                           placeholder="Enter your city">
+                                </div>
+                                <div>
+                                    <label for="region" class="block text-sm font-medium text-gray-700 mb-2">Region *</label>
+                                    <select id="region" name="region" required
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent">
+                                        <option value="">Select Region</option>
+                                        <option value="greater-accra">Greater Accra</option>
+                                        <option value="ashanti">Ashanti</option>
+                                        <option value="western">Western</option>
+                                        <option value="central">Central</option>
+                                        <option value="eastern">Eastern</option>
+                                        <option value="volta">Volta</option>
+                                        <option value="northern">Northern</option>
+                                        <option value="upper-east">Upper East</option>
+                                        <option value="upper-west">Upper West</option>
+                                        <option value="brong-ahafo">Brong Ahafo</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="postalCode" class="block text-sm font-medium text-gray-700 mb-2">Postal Code</label>
+                                    <input type="text" id="postalCode" name="postalCode"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                           placeholder="Enter postal code">
+                                </div>
+                                <div>
+                                    <label for="country" class="block text-sm font-medium text-gray-700 mb-2">Country *</label>
+                                    <select id="country" name="country" required
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent">
+                                        <option value="ghana">Ghana</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="sameAsBilling" name="sameAsBilling" 
+                                       class="w-4 h-4 text-agri-orange border-gray-300 rounded focus:ring-agri-orange">
+                                <label for="sameAsBilling" class="ml-2 text-sm text-gray-600">
+                                    Billing address is the same as shipping address
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Delivery Options -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Delivery Options</h2>
+                        <div class="space-y-4">
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="delivery" value="standard" class="text-agri-orange focus:ring-agri-orange" checked>
+                                <div class="ml-4 flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h3 class="font-medium text-gray-800">Standard Delivery</h3>
+                                            <p class="text-sm text-gray-600">2-3 business days</p>
+                                        </div>
+                                        <span class="font-bold text-agri-deep">$5.99</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="delivery" value="express" class="text-agri-orange focus:ring-agri-orange">
+                                <div class="ml-4 flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h3 class="font-medium text-gray-800">Express Delivery</h3>
+                                            <p class="text-sm text-gray-600">Next business day</p>
+                                        </div>
+                                        <span class="font-bold text-agri-deep">$12.99</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="delivery" value="same-day" class="text-agri-orange focus:ring-agri-orange">
+                                <div class="ml-4 flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h3 class="font-medium text-gray-800">Same Day Delivery</h3>
+                                            <p class="text-sm text-gray-600">Order before 2 PM</p>
+                                        </div>
+                                        <span class="font-bold text-agri-deep">$19.99</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Payment Method</h2>
+                        <div class="space-y-4">
+                            <!-- Mobile Money -->
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="payment" value="mobile-money" class="text-agri-orange focus:ring-agri-orange" checked>
+                                <div class="ml-4 flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-mobile-alt text-agri-orange mr-3"></i>
+                                            <div>
+                                                <h3 class="font-medium text-gray-800">Mobile Money</h3>
+                                                <p class="text-sm text-gray-600">MTN, Vodafone, AirtelTigo</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/MTN_Logo.svg/120px-MTN_Logo.svg.png" alt="MTN" class="h-6">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Vodafone_icon.svg/120px-Vodafone_icon.svg.png" alt="Vodafone" class="h-6">
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Credit/Debit Card -->
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="payment" value="card" class="text-agri-orange focus:ring-agri-orange">
+                                <div class="ml-4 flex-1">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-credit-card text-agri-orange mr-3"></i>
+                                            <div>
+                                                <h3 class="font-medium text-gray-800">Credit/Debit Card</h3>
+                                                <p class="text-sm text-gray-600">Visa, Mastercard, Verve</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <i class="fab fa-cc-visa text-2xl text-blue-600"></i>
+                                            <i class="fab fa-cc-mastercard text-2xl text-red-600"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Bank Transfer -->
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="payment" value="bank-transfer" class="text-agri-orange focus:ring-agri-orange">
+                                <div class="ml-4 flex-1">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-university text-agri-orange mr-3"></i>
+                                        <div>
+                                            <h3 class="font-medium text-gray-800">Bank Transfer</h3>
+                                            <p class="text-sm text-gray-600">Direct bank transfer</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <!-- Cash on Delivery -->
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="payment" value="cash-on-delivery" class="text-agri-orange focus:ring-agri-orange">
+                                <div class="ml-4 flex-1">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-money-bill-wave text-agri-orange mr-3"></i>
+                                        <div>
+                                            <h3 class="font-medium text-gray-800">Cash on Delivery</h3>
+                                            <p class="text-sm text-gray-600">Pay when you receive</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Payment Details Form (shown conditionally) -->
+                        <div id="payment-details" class="mt-6 hidden">
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="cardNumber" class="block text-sm font-medium text-gray-700 mb-2">Card Number</label>
+                                    <input type="text" id="cardNumber" name="cardNumber"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                           placeholder="1234 5678 9012 3456">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="expiryDate" class="block text-sm font-medium text-gray-700 mb-2">Expiry Date</label>
+                                        <input type="text" id="expiryDate" name="expiryDate"
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                               placeholder="MM/YY">
+                                    </div>
+                                    <div>
+                                        <label for="cvv" class="block text-sm font-medium text-gray-700 mb-2">CVV</label>
+                                        <input type="text" id="cvv" name="cvv"
+                                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                               placeholder="123">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Notes -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Order Notes (Optional)</h2>
+                        <textarea id="orderNotes" name="orderNotes" rows="4"
+                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent"
+                                  placeholder="Special instructions for delivery..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-4">
+                        <h2 class="text-xl font-bold text-gray-800 mb-6">Order Summary</h2>
+                        
+                        <!-- Order Items -->
+                        <div class="space-y-4 mb-6" id="checkout-items">
+                            <!-- Items will be populated by JavaScript -->
+                        </div>
+
+                        <!-- Promo Code -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Promo Code</label>
+                            <div class="flex space-x-2">
+                                <input type="text" id="promoCode" placeholder="Enter code" 
+                                       class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-agri-orange focus:border-transparent">
+                                <button onclick="applyPromoCode()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Order Totals -->
+                        <div class="space-y-3 mb-6 border-t border-gray-200 pt-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span class="font-medium" id="checkout-subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Delivery</span>
+                                <span class="font-medium" id="checkout-delivery">$5.99</span>
+                            </div>
+                            <div class="flex justify-between" id="discount-row" style="display: none;">
+                                <span class="text-gray-600">Discount</span>
+                                <span class="font-medium text-green-600" id="checkout-discount">-$0.00</span>
+                            </div>
+                            <div class="border-t border-gray-200 pt-3">
+                                <div class="flex justify-between text-lg font-bold">
+                                    <span>Total</span>
+                                    <span class="text-agri-deep" id="checkout-total">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Place Order Button -->
+                        <button onclick="placeOrder()" class="w-full bg-agri-deep text-white py-3 px-6 rounded-lg font-semibold hover:bg-agri-light transition-colors mb-4">
+                            <i class="fas fa-lock mr-2"></i>
+                            Place Order
+                        </button>
+
+                        <!-- Security Info -->
+                        <div class="text-center">
+                            <div class="flex items-center justify-center space-x-2 text-sm text-gray-500 mb-2">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Secure checkout with SSL encryption</span>
+                            </div>
+                            <div class="flex items-center justify-center space-x-4 text-xs text-gray-400">
+                                <span>Powered by SmartSupply Agri</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-agri-deep text-white py-16 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-leaf text-agri-deep"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">SmartSupply</h3>
+                            <p class="text-sm opacity-80">Agri Marketplace</p>
+                        </div>
+                    </div>
+                    <p class="text-sm opacity-80 leading-relaxed">
+                        Connecting farmers with buyers across Ghana. Fresh produce, fair prices, sustainable agriculture.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" onclick="navigateToPage('about')" class="hover:opacity-100">About Us</a></li>
+                        <li><a href="#" onclick="navigateToPage('marketplace')" class="hover:opacity-100">Marketplace</a></li>
+                        <li><a href="#" onclick="navigateToPage('farmers')" class="hover:opacity-100">Farmers</a></li>
+                        <li><a href="#" onclick="navigateToPage('contact')" class="hover:opacity-100">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" onclick="navigateToPage('faq')" class="hover:opacity-100">FAQ</a></li>
+                        <li><a href="#" class="hover:opacity-100">Shipping Info</a></li>
+                        <li><a href="#" class="hover:opacity-100">Returns</a></li>
+                        <li><a href="#" onclick="navigateToPage('privacy')" class="hover:opacity-100">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="font-semibold mb-4">Contact Info</h4>
+                    <div class="space-y-2 text-sm opacity-80">
+                        <p><i class="fas fa-phone mr-2"></i>+(233) 872-670-780</p>
+                        <p><i class="fas fa-envelope mr-2"></i>info@smartsupplyagri.com</p>
+                        <p><i class="fas fa-map-marker-alt mr-2"></i>Accra, Ghana</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/20 mt-8 pt-8 text-center text-sm opacity-80">
+                <p>&copy; 2024 SmartSupply Agri. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-8 text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-agri-deep mx-auto mb-4"></div>
+            <p class="text-gray-600">Loading...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="checkout.js"></script>
+</body>
+</html>
